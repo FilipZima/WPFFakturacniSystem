@@ -1,0 +1,11 @@
+Fakturaèní systém
+
+- Jen moje vystavené faktury
+- Databáze faktur
+- Výstup .txt
+- 2 Služby (rùzné $/h)
+- Vymyslet údaje odbìratelù (jméno spol., adresa, IÈO)
+
+- 20 hodin - 20 * x na faktuøe
+
+! Údaje do databáze SQLite
