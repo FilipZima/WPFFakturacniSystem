@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FakturacniSystem
+﻿namespace FakturacniSystem
 {
     public class InvoiceItem
     {
@@ -28,7 +22,7 @@ namespace FakturacniSystem
             this.currency = currency;
         }
 
-        //                                     Name    Amount   Cost per item                           Tax (ex. 21%)        Total cost
+        //                                     Name    Amount           Cost per item               Tax (ex. 21%)                   Total cost
         public override string ToString() => $"{key} ({amount}x) | {FormatCost(cost, currency)} | {(taxRate * 100)}% | {FormatCost(FinalCost, currency)}";
 
         private static string FormatCost(float cost, Currency currency)

@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FakturacniSystem
 {
+    [PrimaryKey(nameof(Id))]
     public class Invoice
     {
+        public int Id;
+
         private Dictionary<string, InvoiceItem> _items = new();
 
         public Invoice() 
@@ -21,7 +22,7 @@ namespace FakturacniSystem
             {
                 InvoiceItem similarItem = _items[item.key];
 
-                // Merge items
+                // Merge items if all properties except amount are the same
                 if (similarItem.cost == item.cost
                     && similarItem.taxRate == item.taxRate
                     && similarItem.currency == item.currency)
@@ -34,6 +35,7 @@ namespace FakturacniSystem
                 }
             }
 
+            // New item
             SetItem(item.key, item);
         }
 

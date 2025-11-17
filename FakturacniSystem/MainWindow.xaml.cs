@@ -1,14 +1,15 @@
-﻿using System.IO;
+﻿using FakturacniSystem.Database;
+using System.IO;
 using System.Text;
 using System.Windows;
 
 namespace FakturacniSystem
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        public static readonly DataContext DbDataContext = new DataContext();
+        public static readonly ContextMgr DbContextMgr = new ContextMgr(DbDataContext);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +28,12 @@ namespace FakturacniSystem
             {
                 invoice.AddItem(invoiceItem);
             }
-            File.WriteAllText(Directory.GetCurrentDirectory() + "\\file.txt", invoice.ToString());
+        }
+
+        public void NewInvoiceButtonClick(object sender, RoutedEventArgs e)
+        {
+            InvoiceBuilder invoiceBuilder = new InvoiceBuilder();
+            invoiceBuilder.ShowDialog();
         }
     }
 }
