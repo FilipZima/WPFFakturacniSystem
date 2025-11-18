@@ -19,6 +19,8 @@ namespace FakturacniSystem
     /// </summary>
     public partial class InvoiceBuilder : Window
     {
+        public static Invoice? finishedInvoice;
+
         List<InvoiceItem> items = new List<InvoiceItem>();
 
         Dictionary<string, Currency> supportedCurrencies = new Dictionary<string, Currency>()
@@ -37,11 +39,47 @@ namespace FakturacniSystem
 
         public void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            Invoice invoice = new Invoice();
+            string srcName, srcCIN, destName, destCIN, title;
+            srcName = SrcName.Text;
+            srcCIN = SrcCIN.Text;
+            destName = DestName.Text;
+            destCIN = DestCIN.Text;
+            title = InvoiceTitle.Text;
+            DateTime date = DatePicker.SelectedDate ?? DateTime.Now;
+
+            if (items.Count < 1)
+            {
+                MessageBox.Show("Add at least one item");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(srcName) 
+                || string.IsNullOrEmpty(srcCIN) 
+                || string.IsNullOrEmpty(destName) 
+                || string.IsNullOrEmpty(destCIN)
+                || string.IsNullOrEmpty(title))
+            {
+                MessageBox.Show("Invalid company details");
+                return;
+            }
+
+            Invoice invoice = new Invoice()
+            {
+                title = title,
+                sourceCIN = srcCIN,
+                sourceCompanyName = srcName,
+                destinationCIN = destCIN,
+                destCompanyName = destName,
+            };
+
             foreach (InvoiceItem item in items)
             {
                 invoice.AddItem(item);
             }
+
+            finishedInvoice = invoice;
+
+            Close();
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
@@ -127,14 +165,14 @@ namespace FakturacniSystem
                 else
                 {
                     MessageBox.Show("Unsupported currency");
-                    currency = null;
+                    currency = Currency.CZK;
                     return false;
                 }
             }
             else
             {
                 MessageBox.Show("No currency selected");
-                currency = null;
+                currency = Currency.CZK;
                 return false;
             }
 
