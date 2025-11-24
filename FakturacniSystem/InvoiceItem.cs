@@ -1,4 +1,6 @@
-﻿namespace FakturacniSystem
+﻿using System.Windows;
+
+namespace FakturacniSystem
 {
     public class InvoiceItem
     {
@@ -11,7 +13,11 @@
             this.currency = currency;
         }
 
-        public int Id { get; set; }   // Primární klíč
+        public int InvoiceId { get; set; }      // foreign key
+
+        public Invoice Invoice { get; set; } = null!; 
+
+        public int Id { get; set; }
 
         public string key { get; set; } = string.Empty;
 
@@ -23,22 +29,14 @@
 
         public Currency currency { get; set; } = Currency.CZK;
 
-        // Vypočítaná vlastnost – EF ji neuloží, ale můžeš ji používat v kódu
         public float FinalCost => cost * amount * (1 + taxRate);
 
         public override string ToString() =>
-            $"{key} ({amount}x) | {FormatCost(cost, currency)} | {(taxRate * 100)}% | {FormatCost(FinalCost, currency)}";
+            $"{key} ({amount}x) | {FormatCost(cost, currency)} | {taxRate * 100}% | {FormatCost(FinalCost, currency)}";
 
         private static string FormatCost(float cost, Currency currency)
         {
-            string costString = cost.ToString();
-
-            int separatorIndex = costString.IndexOf(',');
-            if (separatorIndex == -1) separatorIndex = costString.IndexOf('.');
-
-            if (separatorIndex == -1) return $"{currency} {costString},-";
-
-            return $"{currency} {costString[0..separatorIndex]}.{costString.Substring(separatorIndex + 1, Math.Min(2, costString.Length - separatorIndex - 1))},-";
+            return $"{currency} {cost}";
         }
     }
 

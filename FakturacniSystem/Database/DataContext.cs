@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using FakturacniSystem.Models;
 
 namespace FakturacniSystem.Database
 {
@@ -21,6 +20,12 @@ namespace FakturacniSystem.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Invoice>()
+            .HasMany(i => i.Items)
+            .WithOne(item => item.Invoice)
+            .HasForeignKey(item => item.InvoiceId)
+            .IsRequired();
+
             base.OnModelCreating(modelBuilder);
         }
     }

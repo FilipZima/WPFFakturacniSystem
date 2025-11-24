@@ -1,4 +1,4 @@
-﻿using FakturacniSystem.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace FakturacniSystem.Database
 {
@@ -40,6 +40,6 @@ namespace FakturacniSystem.Database
 
         public Invoice? GetByID(int id) => _context.InvoiceSet.Find(id);
 
-        public List<Invoice> GetAll() => _context.InvoiceSet.ToList();
+        public List<Invoice> GetAll() => _context.InvoiceSet.Include(i => i.Items).ToList();
     }
 }

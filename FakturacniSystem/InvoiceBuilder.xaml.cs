@@ -1,5 +1,4 @@
-﻿using FakturacniSystem.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +19,7 @@ namespace FakturacniSystem
     /// </summary>
     public partial class InvoiceBuilder : Window
     {
-        public static Invoice? finishedInvoice;
-
         List<InvoiceItem> items = new List<InvoiceItem>();
-        List<InvoiceItem> deletedItems = new List<InvoiceItem>();
 
         Dictionary<string, Currency> supportedCurrencies = new Dictionary<string, Currency>()
         {
@@ -31,7 +27,7 @@ namespace FakturacniSystem
             { "USD", Currency.USD },
         };
 
-        public static InvoiceEntity? finishedInvoice { get; private set; } = null;
+        public static Invoice? FinishedInvoice { get; private set; } = null;
 
         public InvoiceBuilder()
         {
@@ -40,7 +36,39 @@ namespace FakturacniSystem
             ItemCurrencyCombo.ItemsSource = supportedCurrencies.Keys;
             ItemCurrencyCombo.SelectedIndex = 0;
 
-            finishedInvoice = null;
+            FinishedInvoice = null;
+
+            if (MainWindow.SelectedInvoice is not null)
+            {
+                Invoice invoice = MainWindow.SelectedInvoice;
+                SrcName.Text = invoice.sourceCompanyName;
+                SrcCIN.Text = invoice.sourceCIN;
+                DestName.Text = invoice.destCompanyName;
+                DestCIN.Text = invoice.destinationCIN;
+                InvoiceTitle.Text = invoice.title;
+                DatePicker.SelectedDate = invoice.date;
+                foreach (InvoiceItem item in invoice.Items)
+                {
+                    items.Add(item);
+                }
+                RefreshDisplay();
+            }
+
+            InvoiceDisplay.SelectionChanged += SelectionChanged;
+        }
+
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (InvoiceDisplay.SelectedItem is InvoiceItem selectedItem)
+            {
+                int index = InvoiceDisplay.SelectedIndex;
+                ItemNameInput.Text = selectedItem.key;
+                ItemAmountInput.Text = selectedItem.amount.ToString();
+                ItemCostInput.Text = selectedItem.cost.ToString();
+                ItemTaxInput.Text = (selectedItem.taxRate * 100).ToString();
+                ItemCurrencyCombo.SelectedItem = selectedItem.currency.ToString();
+                InvoiceDisplay.SelectedIndex = index;
+            }
         }
 
         public void SaveButtonClick(object sender, RoutedEventArgs e)
@@ -69,35 +97,12 @@ namespace FakturacniSystem
                 return;
             }
 
-            Invoice invoice = new Invoice()
-            {
-                title = title,
-                sourceCIN = srcCIN,
-                sourceCompanyName = srcName,
-                destinationCIN = destCIN,
-                destCompanyName = destName,
-            };
-
-            finishedInvoice = new InvoiceEntity();
+            FinishedInvoice = new Invoice(title, srcCIN, destCIN, date, srcName, destName);
             foreach (InvoiceItem item in items)
             {
-                finishedInvoice.Invoice.AddItem(item);
+                FinishedInvoice.AddItem(item);
             }
             Close();
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            if (e.Key == Key.Z 
-                && e.KeyboardDevice.IsKeyDown(Key.LeftCtrl)
-                && deletedItems.Count == 0)
-            {
-                items.Add(deletedItems[0]);
-                deletedItems.RemoveAt(deletedItems.Count - 1);
-                RefreshDisplay();
-            }
-
-            base.OnKeyDown(e);
         }
 
         public void ConfirmButtonClick(object sender, RoutedEventArgs e)
@@ -128,7 +133,16 @@ namespace FakturacniSystem
                 return;
             }
 
-            InvoiceItem newItem = new InvoiceItem(name, amount, cost, taxRate * 0.01f, currency);
+            int existingItemIndex = items.FindIndex(i => i.key == name);
+
+            if (existingItemIndex != -1) // If found override
+            {
+                items[existingItemIndex] = new InvoiceItem(name, amount, taxRate, cost, currency);
+                RefreshDisplay();
+                return;
+            }
+
+            InvoiceItem newItem = new InvoiceItem(name, amount, taxRate, cost, currency);
             items.Add(newItem);
             RefreshDisplay();
         }
@@ -136,7 +150,7 @@ namespace FakturacniSystem
         private bool ScrapeAmount(out int amount)
         {
             string amountText = ItemAmountInput.Text;
-            if (!int.TryParse(amountText, out amount))
+            if (!int.TryParse(amountText, out amount) || amount <= 0)
             {
                 MessageBox.Show("Invalid amount");
                 return false;
@@ -155,6 +169,11 @@ namespace FakturacniSystem
             }
 
             return true;
+        }
+
+        private void CancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private bool ScrapeCurrency(out Currency currency)
@@ -191,6 +210,7 @@ namespace FakturacniSystem
                 return false;
             }
 
+            taxRate *= 0.01f;
             return true;
         }
 
@@ -200,5 +220,15 @@ namespace FakturacniSystem
             InvoiceDisplay.ItemsSource = items;
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete && InvoiceDisplay.SelectedItem is InvoiceItem item)
+            {
+                items.Remove(item);
+                RefreshDisplay();
+            }
+
+            base.OnKeyDown(e);
+        }
     }
 }

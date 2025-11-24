@@ -5,42 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FakturacniSystem"
         mc:Ignorable="d"
-        Title="InvoiceBuilder" Height="450" Width="800">
-    <Grid>
+        Title="InvoiceBuilder" Height="458" Width="800">
+    <Grid Margin="0,0,0,0">
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="217" Margin="330,57,0,0" VerticalAlignment="Top" Width="195"/>
 
-        <ListBox x:Name="InvoiceDisplay" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="414" Width="300"/>
+        <ListBox x:Name="InvoiceDisplay" HorizontalAlignment="Left" Margin="10,16,0,0" VerticalAlignment="Top" Height="353" Width="300"/>
 
         <TextBox x:Name="ItemNameInput" HorizontalAlignment="Left" Margin="648,71,0,0" TextWrapping="Wrap" Text="New Item" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Item name:" HorizontalAlignment="Left" Margin="576,67,0,0" VerticalAlignment="Top"/>
+        <Label Content="Název položky:" HorizontalAlignment="Left" Margin="558,67,0,0" VerticalAlignment="Top"/>
 
         <TextBox x:Name="ItemAmountInput" HorizontalAlignment="Left" Margin="648,103,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Amount:" HorizontalAlignment="Left" Margin="590,99,0,0" VerticalAlignment="Top"/>
+        <Label Content="Množství:" HorizontalAlignment="Left" Margin="587,99,0,0" VerticalAlignment="Top"/>
 
         <TextBox x:Name="ItemCostInput" HorizontalAlignment="Left" Margin="648,135,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="65"/>
-        <Label Content="Cost:" HorizontalAlignment="Left" Margin="609,131,0,0" VerticalAlignment="Top"/>
+        <Label Content="Cena:" HorizontalAlignment="Left" Margin="608,131,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="ItemCurrencyCombo" HorizontalAlignment="Left" Margin="718,133,0,0" VerticalAlignment="Top" Width="50" Height="22"/>
 
-        <Label Content="Tax:" HorizontalAlignment="Left" Margin="616,163,0,0" VerticalAlignment="Top"/>
+        <Label Content="Daň:" HorizontalAlignment="Left" Margin="614,163,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="ItemTaxInput" HorizontalAlignment="Left" Margin="648,167,0,0" TextWrapping="Wrap" Text="21" VerticalAlignment="Top" Width="80"/>
         <Label Content="%" HorizontalAlignment="Left" Margin="731,163,0,0" VerticalAlignment="Top"/>
-        <Button Content="Confirm Item" HorizontalAlignment="Left" Margin="677,0,0,0" VerticalAlignment="Center" Height="29" Width="91" Click="ConfirmButtonClick"/>
-        <Button Content="Save Invoice" HorizontalAlignment="Left" Margin="689,393,0,0" VerticalAlignment="Top" Height="31" Width="101" Click="SaveButtonClick"/>
+        <Button Content="Potvrdit" HorizontalAlignment="Left" Margin="677,0,0,0" VerticalAlignment="Center" Height="29" Width="91" Click="ConfirmButtonClick"/>
+        <Button Content="Uložit fakturu" HorizontalAlignment="Left" Margin="667,322,0,0" VerticalAlignment="Top" Height="31" Width="101" Click="SaveButtonClick"/>
 
         <TextBox x:Name="SrcName" HorizontalAlignment="Left" Margin="383,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="SrcCIN" HorizontalAlignment="Left" Margin="383,110,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Source Company" HorizontalAlignment="Left" Margin="393,62,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,0.098"/>
+        <Label Content="Dodavatel" HorizontalAlignment="Left" Margin="383,63,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,0.098"/>
 
         <TextBox x:Name="DestName" HorizontalAlignment="Left" Margin="383,184,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="DestCIN" HorizontalAlignment="Left" Margin="383,206,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Destination Company" HorizontalAlignment="Left" Margin="381,158,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,0.098"/>
+        <Label Content="Příjemce" HorizontalAlignment="Left" Margin="383,158,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.263,0.098"/>
 
-        <Label Content="Name" HorizontalAlignment="Left" Margin="341,180,0,0" VerticalAlignment="Top"/>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="341,84,0,0" VerticalAlignment="Top"/>
+        <Label Content="Jméno" HorizontalAlignment="Left" Margin="341,180,0,0" VerticalAlignment="Top"/>
+        <Label Content="Jméno" HorizontalAlignment="Left" Margin="341,84,0,0" VerticalAlignment="Top"/>
 
-        <Label Content="CIN" HorizontalAlignment="Left" Margin="353,106,0,0" VerticalAlignment="Top"/>
-        <Label Content="CIN" HorizontalAlignment="Left" Margin="353,202,0,0" VerticalAlignment="Top"/>
+        <Label Content="IČO" HorizontalAlignment="Left" Margin="353,106,0,0" VerticalAlignment="Top"/>
+        <Label Content="IČO" HorizontalAlignment="Left" Margin="353,202,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="DatePicker" HorizontalAlignment="Left" Margin="374,244,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="InvoiceTitle" HorizontalAlignment="Left" Margin="330,10,0,0" TextWrapping="Wrap" Text="New Invoice" VerticalAlignment="Top" Width="460" Height="37" FontSize="22"/>
+        <TextBox x:Name="InvoiceTitle" HorizontalAlignment="Left" Margin="330,10,0,0" TextWrapping="Wrap" Text="Nová faktura" VerticalAlignment="Top" Width="460" Height="37" FontSize="22"/>
+        <Button Content="Zrušit" HorizontalAlignment="Left" Margin="330,322,0,0" VerticalAlignment="Top" Height="31" Width="50" Click="CancelButtonClick"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="217" Margin="548,57,0,0" VerticalAlignment="Top" Width="230"/>
     </Grid>
 </Window>
