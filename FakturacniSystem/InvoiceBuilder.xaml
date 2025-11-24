@@ -23,6 +23,6 @@
         <TextBox x:Name="ItemTaxInput" HorizontalAlignment="Left" Margin="649,128,0,0" TextWrapping="Wrap" Text="21" VerticalAlignment="Top" Width="80"/>
         <Label Content="%" HorizontalAlignment="Left" Margin="732,124,0,0" VerticalAlignment="Top"/>
         <Button Content="Confirm Item" HorizontalAlignment="Left" Margin="678,163,0,0" VerticalAlignment="Top" Height="29" Width="91" Click="ConfirmButtonClick"/>
-        <Button Content="Save Invoice" HorizontalAlignment="Left" Margin="689,393,0,0" VerticalAlignment="Top" Height="31" Width="101" Click="SaveButtonClick"/>
+        <Button Content="Save Invoice" HorizontalAlignment="Left" Margin="673,371,0,0" VerticalAlignment="Top" Height="31" Width="101" Click="SaveButtonClick"/>
     </Grid>
 </Window>

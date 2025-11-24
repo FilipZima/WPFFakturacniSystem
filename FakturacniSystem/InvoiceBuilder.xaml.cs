@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FakturacniSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace FakturacniSystem
     public partial class InvoiceBuilder : Window
     {
         List<InvoiceItem> items = new List<InvoiceItem>();
+        List<InvoiceItem> deletedItems = new List<InvoiceItem>();
 
         Dictionary<string, Currency> supportedCurrencies = new Dictionary<string, Currency>()
         {
@@ -27,36 +29,40 @@ namespace FakturacniSystem
             { "USD", Currency.USD },
         };
 
+        public static InvoiceEntity? finishedInvoice { get; private set; } = null;
+
         public InvoiceBuilder()
         {
             InitializeComponent();
 
             ItemCurrencyCombo.ItemsSource = supportedCurrencies.Keys;
             ItemCurrencyCombo.SelectedIndex = 0;
+
+            finishedInvoice = null;
         }
 
         public void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            Invoice invoice = new Invoice();
+            finishedInvoice = new InvoiceEntity();
             foreach (InvoiceItem item in items)
             {
-                invoice.AddItem(item);
+                finishedInvoice.Invoice.AddItem(item);
             }
+            Close();
         }
 
-        protected override void OnKeyUp(KeyEventArgs e)
+        protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Key.Delete)
+            if (e.Key == Key.Z 
+                && e.KeyboardDevice.IsKeyDown(Key.LeftCtrl)
+                && deletedItems.Count == 0)
             {
-                InvoiceItem? item = InvoiceDisplay.SelectedItem as InvoiceItem;
-                if (item != null)
-                {
-                    items.Remove(item);
-                    RefreshDisplay();
-                }
+                items.Add(deletedItems[0]);
+                deletedItems.RemoveAt(deletedItems.Count - 1);
+                RefreshDisplay();
             }
 
-            base.OnKeyUp(e);
+            base.OnKeyDown(e);
         }
 
         public void ConfirmButtonClick(object sender, RoutedEventArgs e)

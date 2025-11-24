@@ -7,7 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="590,10,10,66"/>
-        <Button x:Name="NewInvoiceButton" Content="New Invoice" HorizontalAlignment="Left" Margin="648,373,0,0" VerticalAlignment="Top" Height="32" RenderTransformOrigin="0.498,0.322" Width="84" Click="NewInvoiceButtonClick"/>
+        <ListBox x:Name="InvoiceList"  d:ItemsSource="{d:SampleData ItemCount=5}" Margin="590,10,10,66"/>
+        <Button x:Name="NewInvoiceButton" Content="Nová faktura" HorizontalAlignment="Left" Margin="648,373,0,0" VerticalAlignment="Top" Height="32" RenderTransformOrigin="0.498,0.322" Width="84" Click="NewInvoiceButtonClick"/>
+        <Label Content="Dodavatel:" HorizontalAlignment="Left" Margin="18,32,0,0" VerticalAlignment="Top"/>
+        <Label Content="Odběratel:" HorizontalAlignment="Left" Margin="298,27,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="CINLabel1"  Content="IČO:" HorizontalAlignment="Left" Margin="67,58,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label x:Name="CINLabel2"  Content="IČO:" HorizontalAlignment="Left" Margin="347,53,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label x:Name="NameLabel1"  Content="Jméno:" HorizontalAlignment="Left" Margin="52,84,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label x:Name="NameLabel2"  Content="Jméno:" HorizontalAlignment="Left" Margin="332,79,0,0" VerticalAlignment="Top" Width="132"/>
     </Grid>
 </Window>

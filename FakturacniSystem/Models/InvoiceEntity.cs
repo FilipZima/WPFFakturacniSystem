@@ -8,7 +8,7 @@ namespace FakturacniSystem.Models
     public class InvoiceEntity : INotifyPropertyChanged
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; } = "NAME NOT FOUND";
         public Invoice _invoice = new Invoice();
 
         public event PropertyChangedEventHandler? PropertyChanged;
