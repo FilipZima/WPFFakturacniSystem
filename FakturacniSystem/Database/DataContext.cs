@@ -5,7 +5,8 @@ namespace FakturacniSystem.Database
 {
     public class DataContext : DbContext
     {
-        public DbSet<InvoiceEntity> InvoiceSet { get; set; }
+        public DbSet<Invoice> InvoiceSet { get; set; }
+        public DbSet<InvoiceItem> InvoiceItemSet { get; set; }
 
         public DataContext() 
         { 

@@ -11,35 +11,35 @@ namespace FakturacniSystem.Database
             _context = context;
         }
 
-        public void Add(InvoiceEntity entity)
+        public void Add(Invoice entity)
         {
-            _context.Add(entity);
+            _context.InvoiceSet.Add(entity);
             _context.SaveChanges();
         }
 
-        public void Remove(InvoiceEntity entity)
+        public void Remove(Invoice entity)
         {
             _context.Remove(entity);
             _context.SaveChanges();
         }
 
-        public void Update(InvoiceEntity entity)
+        public void Update(Invoice entity)
         {
             _context.Update(entity);
             _context.SaveChanges();
         }
 
-        public InvoiceEntity? GetByTitle(string title)
+        public Invoice? GetByTitle(string title)
         {
-            foreach (InvoiceEntity e in _context.InvoiceSet)
+            foreach (Invoice e in _context.InvoiceSet)
             {
-                if (e.Name == title) return e;
+                if (e.title == title) return e;
             }
             return null;
         }
 
-        public InvoiceEntity? GetByID(int id) => _context.InvoiceSet.Find(id);
+        public Invoice? GetByID(int id) => _context.InvoiceSet.Find(id);
 
-        public List<InvoiceEntity> GetAll() => _context.InvoiceSet.ToList();
+        public List<Invoice> GetAll() => _context.InvoiceSet.ToList();
     }
 }

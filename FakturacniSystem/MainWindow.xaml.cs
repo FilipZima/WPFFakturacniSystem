@@ -1,4 +1,6 @@
 ﻿using FakturacniSystem.Database;
+using FakturacniSystem.Models;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Text;
 using System.Windows;

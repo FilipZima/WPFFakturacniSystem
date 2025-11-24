@@ -13,6 +13,11 @@ namespace FakturacniSystem.Models
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public InvoiceEntity(Invoice invoice)
+        {
+            _invoice = invoice;
+        }
+
         public Invoice Invoice
         {
             get => _invoice;
