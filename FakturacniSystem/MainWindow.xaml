@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FakturacniSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Fakturační Systém X3000" Height="450" Width="800">
     <Grid>
         <ListBox x:Name="InvoiceList"  d:ItemsSource="{d:SampleData ItemCount=5}" Margin="565,10,35,66"/>
         <Button x:Name="NewInvoiceButton" Content="Nová faktura" HorizontalAlignment="Left" Margin="681,373,0,0" VerticalAlignment="Top" Height="32" RenderTransformOrigin="0.498,0.322" Width="84" Click="NewInvoiceButtonClick"/>
